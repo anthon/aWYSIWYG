@@ -17,8 +17,7 @@
 				iFrame.height = textBox.height() + 10;
 				iFrame.width = textBox.width() + 10;
 				iFrame.style.backgroundColor = textBox.css('backgroundColor');
-				iFrame.style.border = "1px solid #CCC";
-				iFrame.style.borderTop = "1px solid #666";
+				iFrame.style.border = "0px";
 				if(textBox.attr('class')){
 					iFrame.className = textBox.attr('class');
 				}
@@ -58,20 +57,24 @@
 //				body.style.fontSize = "11";
 //				body.style.lineHeight = textBox.css('line-height');
 				body.style.margin = "0px";
+				body.style.width = "auto";
+				body.style.height = "auto";
 				body.style.padding = textBox.css('padding-left');
 				body.style.cursor = "text";
 				
 				// apply external CSS if enabled
 				if(settings.extStyles) {
-					css = document.createElement('link');
-					css.type = "text/css";
-					css.rel = "stylesheet";
-					css.href = settings.extStyles;
-					
-					if($.browser.msie) {
-						Editor.documentElement.firstChild.appendChild(css);
-					} else {
-						Editor.getElementsByTagName("head")[0].appendChild(css);
+					for(var i=0;i<settings.extStyles.length;i++){
+						css = document.createElement('link');
+						css.type = "text/css";
+						css.rel = "stylesheet";
+						css.href = settings.extStyles[i];
+						
+						if($.browser.msie) {
+							Editor.documentElement.firstChild.appendChild(css);
+						} else {
+							Editor.getElementsByTagName("head")[0].appendChild(css);
+						}
 					}
 				}
 			}
@@ -135,28 +138,30 @@
 				  	</div>");
 	*/
 				if(options.icons) {
-	/*
-					toolbar = $("<div class='aWYSWYG_toolbar'>\
-						<a href=\"#\" class='undo'><img src='"+options.imgPath+"/undo.gif'/></a>\
-					  	<a href=\"#\" class='redo'><img src='"+options.imgPath+"/redo.gif'/></a> | \
-					  	<a href=\"#\" class='bold'><img src='"+options.imgPath+"/bold.gif'/></a>\
-					  	<a href=\"#\" class='italic'><img src='"+options.imgPath+"/italic.gif'/></a> | \
-					  	<a href=\"#\" class='alignLeft'><img src='"+options.imgPath+"/align_left.gif'/></a>\
-					  	<a href=\"#\" class='alignCenter'><img src='"+options.imgPath+"/align_center.gif'/></a>\
-					  	<a href=\"#\" class='alignRight'><img src='"+options.imgPath+"/align_right.gif'/></a> | \
-					  	<a href=\"#\" class='addURL'><img src='"+options.imgPath+"/insert_link.gif'/></a>\
-					  	<a href=\"#\" class='removeURL'><img src='"+options.imgPath+"/remove_link.gif'/></a> | \
-					  	<a href=\"#\" class='biggerText'><img src='"+options.imgPath+"/text_bigger.gif'/></a>\
-					  	<a href=\"#\" class='smallerText'><img src='"+options.imgPath+"/text_smaller.gif'/></a> | \
-					  	<a href=\"#\" class='clean'>clean</a> | \
-					  	<a href=\"#\" class='list'>list</a>\
-					  	</div>");
-	*/
+						toolbar = $("<div class='aWYSWYG_toolbar'>\
+							<a href=\"#\" class='undo'><img src='"+options.imgPath+"/undo.gif'/></a>\
+						  	<a href=\"#\" class='redo'><img src='"+options.imgPath+"/redo.gif'/></a> | \
+						  	<a href=\"#\" class='bold'><img src='"+options.imgPath+"/bold.gif'/></a>\
+						  	<a href=\"#\" class='italic'><img src='"+options.imgPath+"/italic.gif'/></a> | \
+						  	<a href=\"#\" class='alignLeft'><img src='"+options.imgPath+"/align_left.gif'/></a>\
+						  	<a href=\"#\" class='alignCenter'><img src='"+options.imgPath+"/align_center.gif'/></a>\
+						  	<a href=\"#\" class='alignRight'><img src='"+options.imgPath+"/align_right.gif'/></a> | \
+						  	<a href=\"#\" class='addURL'><img src='"+options.imgPath+"/insert_link.gif'/></a>\
+						  	<a href=\"#\" class='removeURL'><img src='"+options.imgPath+"/remove_link.gif'/></a> | \
+						  	<a href=\"#\" class='biggerText'><img src='"+options.imgPath+"/text_bigger.gif'/></a>\
+						  	<a href=\"#\" class='smallerText'><img src='"+options.imgPath+"/text_smaller.gif'/></a> | \
+						  	<a href=\"#\" class='horizontalRule'><img src='"+options.imgPath+"/horizontal_rule.gif'/></a>\
+						  	<a href=\"#\" class='list'><img src='"+options.imgPath+"/list.gif'/></a> | \
+						  	<a href=\"#\" class='clean'>clean</a>\
+						  </div>");
+	
+/*
 					toolbar = $("<div class='aWYSWYG_toolbar'>\
 					  	<a href=\"#\" class='bold'><img src='"+options.imgPath+"/bold.gif'/></a>\
 					  	<a href=\"#\" class='italic'><img src='"+options.imgPath+"/italic.gif'/></a>\
 					  	<a href=\"#\" class='list'>list</a>\
 					  	</div>");
+*/
 				} else {
 /*
 					toolbar = $("<div class='aWYSWYG_toolbar'>\
@@ -193,24 +198,25 @@
 					});
 				}
 				
-	//			$('.undo', toolbar).click(function(){ applyToText('undo'); return false; });
-	//			$('.redo', toolbar).click(function(){ applyToText('redo'); return false; });
+				$('.undo', toolbar).click(function(){ applyToText('undo'); return false; });
+				$('.redo', toolbar).click(function(){ applyToText('redo'); return false; });
 				$('.bold', toolbar).click(function(){ applyToText('bold'); return false; });
 				$('.italic', toolbar).click(function(){ applyToText('italic'); return false; });
-	//			$('.alignLeft', toolbar).click(function(){ applyToText('justifyleft'); return false; });
-	//			$('.alignCenter', toolbar).click(function(){ applyToText('justifycenter'); return false; });
-	//			$('.alignRight', toolbar).click(function(){ applyToText('justifyright'); return false; });
-	//			$('.addURL', toolbar).click(function(){ addURL(); return false; });
-	//			$('.removeURL', toolbar).click(function(){ applyToText('unlink'); return false; });
-	//			if($.browser.msie) {
-	//				$('.biggerText', toolbar).click(function(){ ieFontSize('increase'); return false; });
-	//				$('.smallerText', toolbar).click(function(){ ieFontSize('decrease'); return false; });
-	//			} else {
-	//				$('.biggerText', toolbar).click(function(){ applyToText('increasefontsize'); return false; });
-	//				$('.smallerText', toolbar).click(function(){ applyToText('decreasefontsize'); return false; });
-	//			}
-	//			$('.clean', toolbar).click(function(){ cleanText(); return false; });
+				$('.alignLeft', toolbar).click(function(){ applyToText('justifyleft'); return false; });
+				$('.alignCenter', toolbar).click(function(){ applyToText('justifycenter'); return false; });
+				$('.alignRight', toolbar).click(function(){ applyToText('justifyright'); return false; });
+				$('.addURL', toolbar).click(function(){ addURL(); return false; });
+				$('.removeURL', toolbar).click(function(){ applyToText('unlink'); return false; });
+				if($.browser.msie) {
+					$('.biggerText', toolbar).click(function(){ ieFontSize('increase'); return false; });
+					$('.smallerText', toolbar).click(function(){ ieFontSize('decrease'); return false; });
+				} else {
+					$('.biggerText', toolbar).click(function(){ applyToText('increasefontsize'); return false; });
+					$('.smallerText', toolbar).click(function(){ applyToText('decreasefontsize'); return false; });
+				}
+				$('.horizontalRule', toolbar).click(function(){ applyToText('inserthorizontalrule'); return false; });
 				$('.list', toolbar).click(function(){ applyToText('insertunorderedlist'); return false; });
+				$('.clean', toolbar).click(function(){ cleanText(); return false; });
 	/*
 				$('.addIMG', toolbar).click(function(){ addImage(); return false; });
 				$('.preview', toolbar).click(function(){ disableDesignMode(); return false; });
