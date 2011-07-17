@@ -1,0 +1,15 @@
+Nothing much to add. Developed as part of aCMS, and released as standalone plugin for jQuery. Use it!
+
+
+HOW_TO:
+
+Simply run .aWYSIWYG() on a textarea to activate;
+
+	$("textarea.rte").aWYSIWYG({options});
+
+
+OPTIONS:
+
+	icons:		Use UI images [true]
+	imgPath:	Path to UI images [../imgs/static/aWYSIWYG]
+	extStyles:	Path to external style sheet (for styling of iFrame content) [../css/main.css]
